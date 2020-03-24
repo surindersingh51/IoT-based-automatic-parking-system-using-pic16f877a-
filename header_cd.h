@@ -17,4 +17,4 @@
 
 #define _XTAL_FREQ 80000000 //Crystal Frequency, used in delay
 #define speed 5 // Speed Range 10 to 1  10 = lowest , 1 = highest
-#define steps 50 // how much step it will take
+#define steps 4 // how much step it will take
