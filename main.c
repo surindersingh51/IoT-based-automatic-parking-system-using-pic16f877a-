@@ -2,7 +2,7 @@
  * File:   main.c
  * Author: SURINDER  MEHTOT
  *
- * Created on March 4, 2020, 3:29 PM
+  * Created on March 4, 2020, 3:29 PM
  */
 // main source file containing main code 
 #include <stdio.h>
