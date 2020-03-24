@@ -14,4 +14,4 @@
 #pragma config CP = OFF         // Flash Program Memory Code Protection bit (Code protection off)
 #include <xc.h>
 
-#define _XTAL_FREQ 8000000   //8MHz crystal oscillator frequency 
+#define _XTAL_FREQ 8000000    //8MHz crystal oscillator frequency 
