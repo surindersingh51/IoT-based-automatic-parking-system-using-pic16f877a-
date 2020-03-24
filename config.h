@@ -1,5 +1,5 @@
 // Code for interfacing led with PIC16f877a 
-/ PIC16LF877A Configuration Bit Settings
+// PIC16LF877A Configuration Bit Settings
 
 // 'C' source line config statements
 
