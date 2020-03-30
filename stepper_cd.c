@@ -17,7 +17,7 @@ void ms_delay(unsigned int val);  // function for delay
  
 
 
-void ms_delay(unsigned int val)      //function defined here for delay..
+void ms_delay(unsigned int val)              //function defined here for delay..
 {
      unsigned int i,j;
         for(i=0;i<val;i++)
