@@ -257,7 +257,7 @@ char esp8266_restart(void) {
  *
  * This sends the ATE command to the ESP module.
  *
- * @param echo whether to enable command echoing or not
+ * echo whether to enable command echoing or not
  */
 void esp8266_echoCmds(bool echo) {
     _esp8266_print("ATE");
@@ -278,7 +278,7 @@ void esp8266_echoCmds(bool echo) {
  *
  * This sends the AT+CWMODE command to the ESP module.
  *
- * @param mode an ORed bitmask of ESP8266_STATION and ESP8266_SOFTAP
+ * mode an ORed bitmask of ESP8266_STATION and ESP8266_SOFTAP
  */
 void esp8266_mode(unsigned char mode) {
     _esp8266_print("AT+CWMODE=");
@@ -292,8 +292,8 @@ void esp8266_mode(unsigned char mode) {
  *
  * This sends the AT+CWJAP command to the ESP module.
  *
- * @param ssid The SSID to connect to
- * @param pass The password of the network
+ * ssid The SSID to connect to
+ * pass The password of the network
  * @return an ESP status code, normally either ESP8266_OK or ESP8266_FAIL
  */
 unsigned char esp8266_connect(unsigned char* ssid, unsigned char* pass) {
@@ -323,7 +323,7 @@ void esp8266_disconnect(void) {
  * The result will not be stored as a string but byte by byte. For example, for
  * the IP 192.168.0.1, the value of store_in will be: {0xc0, 0xa8, 0x00, 0x01}.
  *
- * @param store_in a pointer to an array of the type unsigned char[4]; this
+ * store_in a pointer to an array of the type unsigned char[4]; this
  * array will be filled with the local IP.
  */
 void esp8266_ip(unsigned char* store_in) {
@@ -449,7 +449,7 @@ void esp8266_receive(unsigned char* store_in, uint16_t max_length, bool discard_
  *
  * This is a function for internal use only.
  *
- * @param ptr A pointer to the string to send.
+ *  ptr A pointer to the string to send.
  */
 void _esp8266_print(unsigned const char *ptr) {
     while (*ptr != 0) {
@@ -463,7 +463,7 @@ void _esp8266_print(unsigned const char *ptr) {
  * Careful: this will read everything until that string (even if it's never
  * found). You may lose important data.
  *
- * @param string
+ * string
  *
  * @return the number of characters read
  */
