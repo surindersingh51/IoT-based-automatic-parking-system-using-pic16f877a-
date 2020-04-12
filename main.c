@@ -16,7 +16,7 @@ int main()
   PORTD=0x00;                  //port d as output
   while(1)
   {
-    RD0 = 1;           // LED ON
+      RD0 = 1;           // LED ON
     __delay_ms(1000); // 1 Second Delay
     RD0 = 0;          // LED OFF
     __delay_ms(1000); // 1 Second Delay
