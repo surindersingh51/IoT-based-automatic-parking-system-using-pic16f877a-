@@ -204,16 +204,17 @@ int main(void)
         Lcd_Write_String("SPOT 1, 2, 3");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String(" FILLED");
-         RC4=0;  //red turns off when vehicle enters
+        
         __delay_ms(2000);
-      
+       RC4=0;  //red turns off when vehicle enters
+       __delay_ms(200);
         RB0=0;   //set green led high at parking spot4 to identify spot is 
         __delay_ms(200);
         RB1=0;   //set green led high at parking spot4 to identify spot is full
           __delay_ms(200);
         RC5=0;   //set green led high at parking spot4 to identify spot is full
          __delay_ms(200);
-        RC5=1;   //set green led high at parking spot4 to identify spot is full
+        RC6=1;   //set green led high at parking spot4 to identify spot is full
         Lcd_Clear();
         }
        
@@ -250,8 +251,10 @@ int main(void)
         Lcd_Write_String("ALL SPOTS FILLED");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String("SORRY!!!");
-        RC4 =0;
+    
         __delay_ms(2000);
+            RC4 =0;
+            __delay_ms(200);
           RB0=0;   //set green led high at parking spot4 to identify spot is 
         __delay_ms(200);
         RB1=0;   //set green led high at parking spot4 to identify spot is full
@@ -506,3 +509,44 @@ int main(void)
 
 
 
+
+/*deleted things 
+  for(a=0;a<15;a++)
+        {
+            __delay_ms(300);
+            Lcd_Shift_Left();
+        }
+ 
+ 
+   for(a=0;a<15;a++)
+        {
+            __delay_ms(300);
+            Lcd_Shift_Right();
+        }
+ 
+ 
+ Lcd_Set_Cursor(2,1);
+        Lcd_Write_Char('THANK');
+        Lcd_Write_Char('YOU');
+        __delay_ms(2000);
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ */
