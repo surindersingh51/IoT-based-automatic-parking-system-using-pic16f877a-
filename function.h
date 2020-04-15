@@ -11,12 +11,12 @@
 #define D4 RB4
 #define D5 RB5
 #define D6 RB6
-#define D7 RB7
+#define D7 RB7          
 //IR sensor PINS
 #define SW1 RD0 //hereby defining pins for IR sensor at entry
 #define SW2 RD1  //IR at first spot
 #define SW3 RD2  //IR at second spot
-#define SW4 RD3  //IR at third spot
+#define SW4 RD5  //IR at third spot
 #define SW5 RD4 //IR at fourth spot
 //led pins
 #define LED1 RC5 
@@ -126,6 +126,17 @@ void Lcd_Write_String(char *a)
 }
 
 
+void system_init (void); // This function will initialise the ports.
+void full_drive (char direction); // This function will drive the motor in full drive mode
+void half_drive (char direction); // This function will drive the motor in full drive mode
+void wave_drive (char direction); // This function will drive the motor in full drive mode
+void ms_delay(unsigned int val);
+void ms_delay(unsigned int val)
+{
+     unsigned int i,j;
+        for(i=0;i<val;i++)
+            for(j=0;j<1650;j++);
+}
 
 
 
@@ -208,4 +219,17 @@ void Lcd_Write_String(char *a)
 
 
 
+
+//deleted code 
+  void Lcd_Shift_Right()
+{
+	Lcd_Cmd(0x01);
+	Lcd_Cmd(0x0C);
+}
+
+void Lcd_Shift_Left()
+{
+	Lcd_Cmd(0x01);
+	Lcd_Cmd(0x08);
+}
 
