@@ -10,121 +10,227 @@
 #include "function.h"
 #include "config.h"
 unsigned int a;
+void wave_drive (char direction){
+    if (direction == anti_clockwise){
+        PORTC = 0b00000001;
+        ms_delay(500);
+     //   PORTB = 0b00000010;
+     //   ms_delay(500);
+      //  PORTB = 0b00000100;
+       // ms_delay(500);
+       // PORTB = 0b00001000;
+       // ms_delay(500);
+    }
+     if (direction == clockwise){
+        PORTC = 0b00001000;
+        ms_delay(500);
+     //   PORTB = 0b00000100;
+     //   ms_delay(speed);
+     //   PORTB = 0b00000010;
+     //   ms_delay(speed);
+      //  PORTB = 0b00000001;
+      //  ms_delay(speed);
+    }
+    
+}
 int main(void)
 {   
    T1CON = 0x20;
-   TRISD = 0xff; //defined input pins for IR sensor 
+  // TRISD = 0x00; //defined input pins for IR sensor 
    TRISB = 0x00;
-   PORTD = 0xff;   //port d as output
+    //port d as output
    PORTC=0x00;  //port c as output for LED
-    TRISC = 0x00;
+   TRISC = 0x00;
    PORTB=0x00;  //port b for output 
+    TRISD=0xff;//for entry vehicle when all spots are empty... working perfect
+    PORTD = 0xff; 
     Lcd_Init();
          Lcd_Set_Cursor(1,1);
         Lcd_Write_String("Welcome!!!!");
-         __delay_ms(1000);
+         __delay_ms(3000);
         Lcd_Clear();
         Lcd_Set_Cursor(1,1);
-        Lcd_Write_String("PROJECT FOR ");
+        Lcd_Write_String("PROJECT FOR");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String("SMART PARKING");
-        __delay_ms(1000);
-        RB0=1;
-         RB1=1;
-         RC5=1;
-         RC6=1;
-       
+        __delay_ms(3000);
+         Lcd_Clear();
+         for(a=0;a<=2;a++)
+         {
+             for(a=0;a<16;a++)
+        {
+            __delay_ms(300);
+            Lcd_Shift_Right();
         
+        Lcd_Set_Cursor(1,1);
+        Lcd_Write_String("THANK");
+        Lcd_Set_Cursor(2,1);
+        Lcd_Write_String("YOU");
+             }
+         }
+        __delay_ms(2000);
+         RB0=1;
+          __delay_ms(200);
+         RB1=1;
+          __delay_ms(200);
+         RC5=1;
+          __delay_ms(200);
+         RC6=1;
+          __delay_ms(200);
     
     //still remaining stepper motor pins.... do later
       while(1)
-    {   //for entry vehicle when all spots are empty... working 
-       while(SW1 == 1 && SW2 == 0 && SW3 == 0 && SW4 == 0 && SW5 == 0)   //first sensor at entry when vehicle comes
-        {   
+    { 
+         
+      
+      
+       
+       while(SW1 == 0 && SW2 == 1 && SW3 == 1 && SW4 == 1 && SW5 == 1)   //first sensor at entry when vehicle comes
+        {  
+          
          RC4=1;//and all spots are empty
          
          Lcd_Clear();
           Lcd_Set_Cursor(1,1);
         Lcd_Write_String("Welcome!!!!");
-         __delay_ms(1000);
+         __delay_ms(3000);
         
         Lcd_Set_Cursor(1,1);
         Lcd_Write_String("All Spot");
          Lcd_Set_Cursor(2,1);
         Lcd_Write_String("Available..wait!");
        
-        __delay_ms(1000);
+        __delay_ms(3000);
         Lcd_Clear();
         Lcd_Set_Cursor(1,1);
         Lcd_Write_String("PARK AT SPOT 1");
-           RC4=0;
+      
         //rotate stepper motor 90 degree clockwise ... code remaining
-        __delay_ms(1000);
+        __delay_ms(2000);
+   for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
+      
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
          //turns off as vehicle enters
-          RB0=1;   //set green led high at parking spot4 to identify spot is 
+        RB0=1;   //set green led high at parking spot4 to identify spot is 
         __delay_ms(200);
         RB1=1;   //set green led high at parking spot4 to identify spot is full
           __delay_ms(200);
         RC5=1;   //set green led high at parking spot4 to identify spot is full
          __delay_ms(200);
         RC6=1;   //set green led high at parking spot4 to identify spot is full
-         Lcd_Clear();
+        __delay_ms(200);
+         RC4=0;//and all spots are empty
+         //Lcd_Clear();
         //rotate stepper motor 90 degree anticlockwise to close door
-       
+       __delay_ms(1000);
         }
        
        
        
-       //for entry vehicle when all spots are empty except first..working  
+       //for entry vehicle when all spots are empty except first..working perfect  
        
-       while(SW1 == 1 && SW2 == 1 && SW3 == 0 && SW4 == 0 && SW4 == 0)   //first sensor at entry when vehicle comes
-        {  
+       while(SW1 == 0 && SW2 == 0 && SW3 == 1 && SW4 == 1 && SW4 == 1)   //first sensor at entry when vehicle comes
+        { 
+          
         RC4 =1;   //red led at entry turns on 
        
-         Lcd_Clear();
-         Lcd_Set_Cursor(1,1);
+        Lcd_Clear();
+        Lcd_Set_Cursor(1,1);
         Lcd_Write_String("3 SPOT FREE");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String("PARK AT SPOT 2");
-        RC4=0;  //red turns off when vehicle enters
-        __delay_ms(1000);
-        //rotate stepper motor 90 degree clockwise ... code remaining
-         
-          RB0=0;   //set green led high at parking spot2 to identify spot is full
-         Lcd_Clear();
        
+        __delay_ms(3000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
+      
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
+         
+        //rotate stepper motor 90 degree clockwise ... code remaining
+        
+          RB0=0;   //set green led high at parking spot2 to identify spot is full
+             __delay_ms(200);
+          RB1=1;   //set green led high at parking spot4 to identify spot is full
+          __delay_ms(200);
+        RC5=1;   //set green led high at parking spot4 to identify spot is full
+         __delay_ms(200);
+        RC6=1;   //set green led high at parking spot4 to identify spot is full
+         __delay_ms(200);
+        RC4=0;  //red turns off when vehicle enters
+         //Lcd_Clear();
+       __delay_ms(1000);
          //rotate stepper motor 90 degree anticlockwise to close door
           
         }
       
-       //for entry vehicle when all spots are empty except first and second..working 
-       while (SW1 == 1 && SW2 == 1 && SW3 == 1 && SW4 == 0 && SW5 == 0)   //first sensor at entry when vehicle comes
+       //for entry vehicle when all spots are empty except first and second..working perfect
+       while (SW1 == 0 && SW2 == 0 && SW3 == 0 && SW4 == 1 && SW5 == 1)   //first sensor at entry when vehicle comes
         {  
+         
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
         Lcd_Set_Cursor(1,1);
-        Lcd_Write_String("Welcome!!!!");
+        Lcd_Write_String("Wait!!");
         __delay_ms(2000);
          Lcd_Clear();
          Lcd_Set_Cursor(1,1);
         Lcd_Write_String("2 SPOT FREE");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String("PARK AT SPOT 3");
-          RC4=0;    //red turns off when vehicle enters
+        
         //rotate stepper motor 90 degree clockwise ... code remaining
-        __delay_ms(1000);
-       
-          RB0=0;   //set green led high at parking spot4 to identify spot is 
+        __delay_ms(3000);
+       for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
+      
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
+        RB0=0;   //set green led high at parking spot4 to identify spot is 
         __delay_ms(200);
         RB1=0;   //set green led high at parking spot4 to identify spot is full
           __delay_ms(200);
-        
+        RC5=1;    //red turns off when vehicle enters
+          __delay_ms(200);
+        RC6=1;    //red turns off when vehicle enters
+              __delay_ms(200);
+        RC4 =0; 
         //rotate stepper motor 90 degree anticlockwise to close door
-            Lcd_Clear();
+           // Lcd_Clear();
+        __delay_ms(200);
         }
       
-       //for entry vehicle when last slot is empty and all are filled...working 
-       while(SW1 == 1 && SW2 == 1 && SW3 == 1 && SW4 == 1 && SW5 == 0)   //first sensor at entry when vehicle comes
+       //for entry vehicle when last slot is empty and all are filled...working on hardware 
+       while(SW1 == 0 && SW2 == 0 && SW3 == 0 && SW4 == 0 && SW5 == 1)   //first sensor at entry when vehicle comes
        {  
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
@@ -136,31 +242,65 @@ int main(void)
         Lcd_Write_String("1 SPOT FREE");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String("PARK AT SPOT 4");
-        RC4=0;  //red turns off when vehicle enters
+        
         //rotate stepper motor 90 degree clockwise ... code remaining
-        __delay_ms(1000);
+        __delay_ms(3000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
+      
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
          RB0=0;   //set green led high at parking spot4 to identify spot is 
         __delay_ms(200);
         RB1=0;   //set green led high at parking spot4 to identify spot is full
           __delay_ms(200);
         RC5=0;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
+        __delay_ms(200);
+        RC6=1;   //set green led high at parking spot4 to identify spot is full
+         __delay_ms(200);
+        RC4=0;  //red turns off when vehicle enters
+        __delay_ms(200);
+        //Lcd_Clear();
        
         //rotate stepper motor 90 degree anticlockwise to close door
             
         }
        
-       //when car is parked on spot 1..working 
-       while(SW1 == 0 && SW2 == 1 && SW3 == 0 && SW4 == 0 && SW5 == 0)   //first sensor at entry when vehicle comes
+       //when car is parked on spot 1..working COME BACK 
+       while(SW2 == 0 && SW3 == 1 && SW4 == 1 && SW5 == 1)   //first sensor at entry when vehicle comes
        {  
+          
+           
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
         Lcd_Set_Cursor(1,1);
         Lcd_Write_String("SPOT 1 FILLED");
-       
-        __delay_ms(2000);
-         RC4=0;  //red turns off when vehicle enters
+         Lcd_Set_Cursor(2,1);
+        Lcd_Write_String("3 SPOT FREE");
+        __delay_ms(3000);
+      for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
       
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
         RB0=0;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
          RB1=1;   //set green led high at parking spot4 to identify spot is 
@@ -168,21 +308,41 @@ int main(void)
         RC5=1;   //set green led high at parking spot4 to identify spot is full
           __delay_ms(200);
         RC6=1;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
+        __delay_ms(200);
+        RC4=0;  //red turns off when vehicle enters
+        //Lcd_Clear();
+        __delay_ms(200);
         }
       
        //when cars are parked on spot 1 and 2..working 
-        while(SW1 == 0 && SW2 == 1 && SW3 == 1 && SW4 == 0 && SW5 == 0)   //first sensor at entry when vehicle comes
+        while(SW2 == 0 && SW3 == 0 && SW4 == 1 && SW5 == 1)   //first sensor at entry when vehicle comes
        {  
+          
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
         Lcd_Set_Cursor(1,1);
         Lcd_Write_String("SPOT 1 FILLED");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String("SPOT 2 FILLED");
-          RC4=0;  //red turns off when vehicle enters
+          
         __delay_ms(2000);
+         Lcd_Set_Cursor(1,1);
+        Lcd_Write_String("SPOT 3,4 FREE");
+        __delay_ms(2000);
+      for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
       
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
       
         RB0=0;   //set green led high at parking spot4 to identify spot is 
         __delay_ms(200);
@@ -191,13 +351,17 @@ int main(void)
         RC5=1;   //set green led high at parking spot4 to identify spot is full
           __delay_ms(200);
         RC6=1;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
+         __delay_ms(200);
+        RC4=0;  //red turns off when vehicle enters
+        __delay_ms(200);
+       // Lcd_Clear();
         }
        
        
        //when cars are parked on spot 1,2,3....working 
-        while(SW1 == 0 && SW2 == 1 && SW3 == 1 && SW4 == 1 && SW5 == 0)   //first sensor at entry when vehicle comes
+        while(SW2 == 0 && SW3 == 0 && SW4 == 0 && SW5 == 1)   //first sensor at entry when vehicle comes
        {  
+           
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
         Lcd_Set_Cursor(1,1);
@@ -205,7 +369,26 @@ int main(void)
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String(" FILLED");
         
+        __delay_ms(1000);
+         Lcd_Set_Cursor(1,1);
+        Lcd_Write_String("ONLY ");
+        Lcd_Set_Cursor(2,1);
+        Lcd_Write_String(" SPOT 4 FREE");
         __delay_ms(2000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
+      
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
        RC4=0;  //red turns off when vehicle enters
        __delay_ms(200);
         RB0=0;   //set green led high at parking spot4 to identify spot is 
@@ -215,11 +398,12 @@ int main(void)
         RC5=0;   //set green led high at parking spot4 to identify spot is full
          __delay_ms(200);
         RC6=1;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
+        __delay_ms(200);
+       // Lcd_Clear();
         }
        
        //when cars are parked on spot 1,2,3,4...working 
-        while(SW1 == 0 && SW2 == 1 && SW3 == 1 && SW4 == 1 && SW5 == 1)   //first sensor at entry when vehicle comes
+      /* while(SW2 == 0 && SW3 == 0 && SW4 == 0 && SW5 == 0)   //first sensor at entry when vehicle comes
        {  
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
@@ -227,10 +411,10 @@ int main(void)
         Lcd_Write_String("SPOT 1, 2, 3, 4");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String("FILLED");
-          RC4=0;  //red turns off when vehicle enters
+          
         __delay_ms(2000);
-      
-      
+      RC4=0;  //red turns off when vehicle enters
+      __delay_ms(200);
          RB0=0;   //set green led high at parking spot4 to identify spot is 
         __delay_ms(200);
         RB1=0;   //set green led high at parking spot4 to identify spot is full
@@ -238,13 +422,15 @@ int main(void)
         RC5=0;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
         RC6=0;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
-        }
+        __delay_ms(200);
+        //Lcd_Clear();
+        }*/
        
        
-      //for entry vehicle when all spots are filled...working 
-       while(SW1 == 1 && SW2 == 1 && SW3 == 1 && SW4 == 1 && SW5 == 1)
+      //for entry vehicle when all spots are filled...working hardware
+       while(SW1 == 0 && SW2 == 0 && SW3 == 0 && SW4 == 0 && SW5 == 0)
        {
+         
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
         Lcd_Set_Cursor(1,1);
@@ -262,19 +448,34 @@ int main(void)
         RC5=0;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
         RC6=0;   //set green led high at parking spot4 to identify spot is full
-            Lcd_Clear();
+        __delay_ms(200);
+            //Lcd_Clear();
       }
        
-        //when car at first spot has left and there is car at entry...working 
-        while(SW1 == 1 && SW2 == 0 && SW3 == 1 && SW4 == 1 && SW5 == 1)   //first sensor at entry when vehicle comes
+        //when car at first spot has left and there is car at entry...working on hardware
+        while(SW1 == 0 && SW2 == 1 && SW3 == 0 && SW4 == 0 && SW5 == 0)   //first sensor at entry when vehicle comes
        {  
-        RC4 =1;   //GREEN led at entry turns on
+        RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
         Lcd_Set_Cursor(1,1);
         Lcd_Write_String("SPOT 1 FREE");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String(" PARK AT 1");
         __delay_ms(2000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
+      
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
         RC4=0;  //red turns off when vehicle enters
         __delay_ms(200);
         RB0=1;   //set green led high at parking spot4 to identify spot is full
@@ -284,13 +485,14 @@ int main(void)
         RC5=0;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
         RC6=0;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
+        __delay_ms(200);
+        //Lcd_Clear();
         }
        
        //when car at FIRST AND SECOND  spot has left and there is car at entry...working  
-        while(SW1 == 1 && SW2 == 0 && SW3 == 0 && SW4 == 1 && SW5 == 1)   //first sensor at entry when vehicle comes
+        while(SW1 == 0 && SW2 == 1 && SW3 == 1 && SW4 == 0 && SW5 == 0)   //first sensor at entry when vehicle comes
        {  
-        RB1 =1;   //red led at entry turns on
+        RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
         Lcd_Set_Cursor(1,1);
         Lcd_Write_String("SPOT 1 2 FREE");
@@ -298,23 +500,38 @@ int main(void)
         Lcd_Write_String(" PARK AT ANY");
         
         __delay_ms(2000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
+      
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
        RC4=0;  //red turns off when vehicle enters
          __delay_ms(1000);
-       RB0=0; 
+       RB0=1; 
      __delay_ms(200);
       
       
-        RB1=0;   //set green led high at parking spot4 to identify spot is full
+        RB1=1;   //set green led high at parking spot4 to identify spot is full
          __delay_ms(200);
           RC5=0;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
         RC6=0;   //set green led high at parking spot4 to identify spot is full
+        __delay_ms(200);
         Lcd_Clear();
         }
        
        
        //when car at FIRST,SECOND, third spot has left and there is car at entry..working  
-        while(SW1 == 1 && SW2 == 0 && SW3 == 0 && SW4 == 0 && SW5 == 1)   //first sensor at entry when vehicle comes
+        while(SW1 == 0 && SW2 == 1 && SW3 == 1 && SW4 == 1 && SW5 == 0)   //first sensor at entry when vehicle comes
        {  
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
@@ -322,21 +539,38 @@ int main(void)
         Lcd_Write_String("SPOT 1 2 3 FREE");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String(" PARK AT ANY");
-            RC4=0;  //red turns off when vehicle enters
+           
         __delay_ms(2000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
       
-    
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
+       RC4=0;  //red turns off when vehicle enters
+             __delay_ms(200);
          RB0=1;   //set green led high at parking spot4 to identify spot is 
         __delay_ms(200);
         RB1=1;   //set green led high at parking spot4 to identify spot is full
           __delay_ms(200);
         RC5=1;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
+          __delay_ms(200);
+        RC6=0;   //set green led high at parking spot4 to identify spot is full
+        __delay_ms(200);
+        //Lcd_Clear();
         }
        
        
        //when car at first and third spot has left and there is car at entry..working  
-        while(SW1 == 1 && SW2 == 0 && SW3 == 1 && SW4 == 0 && SW5 == 1)   //first sensor at entry when vehicle comes
+        while(SW1 == 0 && SW2 == 1 && SW3 == 0 && SW4 == 1 && SW5 == 0)   //first sensor at entry when vehicle comes
        {  
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
@@ -345,17 +579,40 @@ int main(void)
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String(" PARK AT ANY");
         
-        RC4=0;  //red turns off when vehicle enters
+       
         __delay_ms(2000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
       
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
+       RC4=0;  //red turns off when vehicle enters
+       __delay_ms(200);
+         RB0=0;   //set green led high at parking spot4 to identify spot is full
+       __delay_ms(200);
          RB1=1;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
+         
+         RC5=0;   //set green led high at parking spot4 to identify spot is full
+         
+      __delay_ms(200);
+      
         RC6=1;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
+        __delay_ms(200);
+       // Lcd_Clear();
         }
        
         //when car at second and third spot has left and there is car at entry....check 
-        while(SW1 == 1 && SW2 == 1 && SW3 == 0 && SW4 == 0 && SW5 == 1)   //first sensor at entry when vehicle comes
+        while(SW1 == 0 && SW2 == 0 && SW3 == 1 && SW4 == 1 && SW5 == 0)   //first sensor at entry when vehicle comes
        {  
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
@@ -364,18 +621,38 @@ int main(void)
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String(" PARK AT ANY");
         
-        RC4=0;  //red turns off when vehicle enters
+       
         __delay_ms(2000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
       
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
+       RC4=0;  //red turns off when vehicle enters
+       __delay_ms(200);
+         RB0=0;   //set green led high at parking spot4 to identify spot is full
+         __delay_ms(200);
          RB1=1;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
         RC5=1;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
+         __delay_ms(200);
+        RC6=0;   //set green led high at parking spot4 to identify spot is full
+        __delay_ms(200);
+        //Lcd_Clear();
         }
        
        
         //when car at second and fourth spot has left and there is car at entry ...working 
-        while(SW1 == 1 && SW2 == 1 && SW3 == 0 && SW4 == 1 && SW5 == 0)   //first sensor at entry when vehicle comes
+        while(SW1 == 0 && SW2 == 0 && SW3 == 1 && SW4 == 0 && SW5 == 1)   //first sensor at entry when vehicle comes
        {  
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
@@ -383,19 +660,38 @@ int main(void)
         Lcd_Write_String("SPOT 1 3 FREE");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String(" PARK AT ANY");
-          RC4=0;  //red turns off when vehicle enters
+          
         __delay_ms(2000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
       
-      
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
+      RC4=0;  //red turns off when vehicle enters
+         __delay_ms(200);
           RB0=1;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
+        RB1=0;   //set green led high at parking spot4 to identify spot is full
+        __delay_ms(200);
         RC5=1;   //set green led high at parking spot4 to identify spot is full
+        __delay_ms(200);
+        RC6=0;   //set green led high at parking spot4 to identify spot is full
+        __delay_ms(200);
         Lcd_Clear();
         }
        
        
         //when car at first second and fourth spot has left and there is car at entry..working  
-        while(SW1 == 1 && SW2 == 0 && SW3 == 0 && SW4 == 1 && SW5 == 0)   //first sensor at entry when vehicle comes
+        while(SW1 == 0 && SW2 == 1 && SW3 == 1 && SW4 == 0 && SW5 == 1)   //first sensor at entry when vehicle comes
        {  
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
@@ -403,20 +699,38 @@ int main(void)
         Lcd_Write_String("SPOT 1 2 4 FREE");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String(" PARK AT ANY");
-                RC4=0;  //red turns off when vehicle enters
+              
         __delay_ms(2000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
       
-
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
+        RC4=0;  //red turns off when vehicle enters
+           __delay_ms(200);
           RB0=1;   //set green led high at parking spot4 to identify spot is full
-        __delay_ms(200);
+       __delay_ms(200);
          RB1=1;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
+        
+        RC5=0;   //set green led high at parking spot4 to identify spot is full
+        __delay_ms(200);
         RC6=1;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
+        __delay_ms(200);
+        //Lcd_Clear();
         }
        
         //when car at first,third and fourth spot has left and there is car at entry...working  
-        while(SW1 == 1 && SW2 == 0 && SW3 == 1 && SW4 == 0 && SW5 == 0)   //first sensor at entry when vehicle comes
+        while(SW1 == 0 && SW2 == 1 && SW3 == 0 && SW4 == 1 && SW5 == 1)   //first sensor at entry when vehicle comes
        {  
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
@@ -424,16 +738,34 @@ int main(void)
         Lcd_Write_String("SPOT 1 3 4 FREE");
         Lcd_Set_Cursor(2,1);
         Lcd_Write_String(" PARK AT ANY");
-           RC4=0;  //red turns off when vehicle enters
+          
         __delay_ms(2000);
+        for(int i=0;i<1;i++)
+{
+   
+    wave_drive(clockwise);
+           
+}
+        __delay_ms(3000);
+        for(int i=0;i<steps;i++)
+{
       
-     
+            wave_drive(anti_clockwise);
+         
+}
+         __delay_ms(2000);
+      
+      RC4=0;  //red turns off when vehicle enters
+        __delay_ms(200);
           RB0=1;   //set green led high at parking spot4 to identify spot is full
+        __delay_ms(200);
+          RB0=0;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
          RC5=1;   //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
         RC6=1;   //set green led high at parking spot4 to identify spot is full
-        Lcd_Clear();
+        __delay_ms(200);
+       // Lcd_Clear();
         }
   }
         return 0; 
