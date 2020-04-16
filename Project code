@@ -12,8 +12,8 @@
 unsigned int a;
 
 char apiKey = "HIGI5NSCT2TNP1GG"; //thingspeak API write key
-char ssid = "Francis";//wifi ssid 
-char password = "bananana";//wifi password
+char ssid = "Lgg gya wifi";//wifi ssid 
+char password = "Waheguru";//wifi password
 char getStr = "GET /update?api_key="+apiKey;   // prepare GET string
 
 void wave_drive (char direction){
@@ -403,7 +403,7 @@ int main(void)
           __delay_ms(200);
         RC5=0;   //set green led high at parking spot4 to identify spot is full
          __delay_ms(200);
-        RC6=1;   //set green led high at parking spot4 to identify spot is full
+        RC6=1;    //set green led high at parking spot4 to identify spot is full
         __delay_ms(200);
        // Lcd_Clear();
         }
@@ -781,7 +781,7 @@ int main(void)
     /*__________________ESP-01 setup complete________________________*/
     char cmd = "AT+CIPSTART=""TCP"",""184.106.153.149"",""80""";//sending IP address of thingspeak
     char getStr;
-    while(SW2==1 || SW2==0  || SW3==1 || SW3==0  || SW4==1 || SW4==0  || SW5==1 || SW5==0  ||)
+    while(SW2==1 || SW2==0  || SW3==1 || SW3==0  || SW4==1 || SW4==0  || SW5==1 || SW5==0)
     {
          //checking the value of IR sensor  
 
