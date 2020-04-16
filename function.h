@@ -5,6 +5,8 @@
  * Created on March 18, 2020, 5:21 PM
  */
 #include "config.h"
+#include "pic16f877a.h"
+#define Baud_rate 9600
 //LCD pins
 #define RS RB2  //defining pins for LCD interface.
 #define EN RB3
@@ -23,7 +25,7 @@
 #define LED2 RD6
 #define LED3 RB0
 #define LED4 RB1 
-
+#define tx Rc6
 #define redled RC4  //red led at entry
 void Lcd_Port(char a)
 {
