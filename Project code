@@ -10,6 +10,12 @@
 #include "function.h"
 #include "config.h"
 unsigned int a;
+
+char apiKey = "HIGI5NSCT2TNP1GG"; //thingspeak API write key
+char ssid = "Francis";//wifi ssid 
+char password = "bananana";//wifi password
+char getStr = "GET /update?api_key="+apiKey;   // prepare GET string
+
 void wave_drive (char direction){
     if (direction == anti_clockwise){
         PORTC = 0b00000001;
@@ -34,7 +40,7 @@ void wave_drive (char direction){
     
 }
 int main(void)
-{   
+{   Initialize_ESP8266(); //initialize ESP module for UART
    T1CON = 0x20;
   // TRISD = 0x00; //defined input pins for IR sensor 
    TRISB = 0x00;
@@ -768,14 +774,34 @@ int main(void)
        // Lcd_Clear();
         }
   }
+          
+    char set_client="AT+CWMODE=1"; //set ESP as client
+    ESP8266_send_string(set_client);//send data to ESP over UART
+    char set_info="AT+CWJAP="+ssid+password;//connecting to wifi
+    /*__________________ESP-01 setup complete________________________*/
+    char cmd = "AT+CIPSTART=""TCP"",""184.106.153.149"",""80""";//sending IP address of thingspeak
+    char getStr;
+    while(SW2==1 || SW2==0  || SW3==1 || SW3==0  || SW4==1 || SW4==0  || SW5==1 || SW5==0  ||)
+    {
+         //checking the value of IR sensor  
+
+        {
+            char value2 = SW2;//setting flag for IR sensor 1
+            char value3 = SW3;//setting flag for IR sensor 2
+            char value4 = SW4;//setting flag for IR sensor 3
+            char value5 = SW5;//setting flag for IR sensor 4
+    ESP8266_send_string(cmd);//sending the IP address to connect to thingspeak server
+    getStr = "GET /update?api_key="+apiKey; //updating the value using API write key
+    getStr = "&field1=" + getStr + value2+ value3+ value4+ value5;//updating the value using API write key
+    ESP8266_send_string(getStr);//sending the values to thingspeak
+        }
+    
+        }
+       
+        
+          
         return 0; 
        }
-      
-   
-
-
-
-
 
 
 
