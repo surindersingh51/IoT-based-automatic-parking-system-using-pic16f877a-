@@ -87,6 +87,30 @@ int main(void)
     //still remaining stepper motor pins.... do later
       while(1)
     { 
+    
+    
+     char set_client="AT+CWMODE=1"; //set ESP as client
+    ESP8266_send_string(set_client);//send data to ESP over UART
+    char set_info="AT+CWJAP="+ssid+password;//connecting to wifi
+    /*__________________ESP-01 setup complete________________________*/
+    char cmd = "AT+CIPSTART=""TCP"",""184.106.153.149"",""80""";//sending IP address of thingspeak
+    char getStr;
+    while(SW2==1 || SW2==0  || SW3==1 || SW3==0  || SW4==1 || SW4==0  || SW5==1 || SW5==0)
+    {
+         //checking the value of IR sensor  
+
+        {
+            char value2 = SW2;//setting flag for IR sensor 1
+            char value3 = SW3;//setting flag for IR sensor 2
+            char value4 = SW4;//setting flag for IR sensor 3
+            char value5 = SW5;//setting flag for IR sensor 4
+    ESP8266_send_string(cmd);//sending the IP address to connect to thingspeak server
+    getStr = "GET /update?api_key="+apiKey; //updating the value using API write key
+    getStr = "&field1=" + getStr + value2+ value3+ value4+ value5;//updating the value using API write key
+    ESP8266_send_string(getStr);//sending the values to thingspeak
+        }
+    
+        }
          
       
       
@@ -738,6 +762,8 @@ int main(void)
         //when car at first,third and fourth spot has left and there is car at entry...working  
         while(SW1 == 0 && SW2 == 1 && SW3 == 0 && SW4 == 1 && SW5 == 1)   //first sensor at entry when vehicle comes
        {  
+       
+       
         RC4 =1;   //red led at entry turns on
         Lcd_Clear(); 
         Lcd_Set_Cursor(1,1);
@@ -775,28 +801,7 @@ int main(void)
         }
   }
           
-    char set_client="AT+CWMODE=1"; //set ESP as client
-    ESP8266_send_string(set_client);//send data to ESP over UART
-    char set_info="AT+CWJAP="+ssid+password;//connecting to wifi
-    /*__________________ESP-01 setup complete________________________*/
-    char cmd = "AT+CIPSTART=""TCP"",""184.106.153.149"",""80""";//sending IP address of thingspeak
-    char getStr;
-    while(SW2==1 || SW2==0  || SW3==1 || SW3==0  || SW4==1 || SW4==0  || SW5==1 || SW5==0)
-    {
-         //checking the value of IR sensor  
-
-        {
-            char value2 = SW2;//setting flag for IR sensor 1
-            char value3 = SW3;//setting flag for IR sensor 2
-            char value4 = SW4;//setting flag for IR sensor 3
-            char value5 = SW5;//setting flag for IR sensor 4
-    ESP8266_send_string(cmd);//sending the IP address to connect to thingspeak server
-    getStr = "GET /update?api_key="+apiKey; //updating the value using API write key
-    getStr = "&field1=" + getStr + value2+ value3+ value4+ value5;//updating the value using API write key
-    ESP8266_send_string(getStr);//sending the values to thingspeak
-        }
-    
-        }
+   
        
         
           
