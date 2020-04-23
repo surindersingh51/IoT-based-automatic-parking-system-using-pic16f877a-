@@ -14,7 +14,7 @@ unsigned int a;
 char apiKey = "HIGI5NSCT2TNP1GG"; //thingspeak API write key
 char ssid = "Lgg gya wifi";//wifi ssid 
 char password = "Waheguru";//wifi password
-char getStr = "GET /update?api_key="+apiKey;   // prepare GET string
+char getStr = "GET /update?api_key="+apiKey;    // prepare GET string
 
 void wave_drive (char direction){
     if (direction == anti_clockwise){
