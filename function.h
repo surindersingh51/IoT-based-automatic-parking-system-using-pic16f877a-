@@ -20,7 +20,7 @@
 #define SW3 RD2  //IR at second spot
 #define SW4 RD5  //IR at third spot
 #define SW5 RD4 //IR at fourth spot
-//led pins
+//led pins defined
 #define LED1 RC5 
 #define LED2 RD6
 #define LED3 RB0
