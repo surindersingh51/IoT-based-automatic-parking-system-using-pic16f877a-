@@ -24,7 +24,7 @@
 #define SW4 RB4   //FIFTH SENSOR CONNECTED AT SPOT 4 DEFINED AS SW4       AT RB4 PIN
 
 
-void Lcd_SetBit(char data_bit)        //Based on the Hex value Set the Bits of the Data Lines
+void Lcd_SetBit(char data_bit)             //Based on the Hex value Set the Bits of the Data Lines
 {
     if(data_bit& 1) 
         D4 = 1;
